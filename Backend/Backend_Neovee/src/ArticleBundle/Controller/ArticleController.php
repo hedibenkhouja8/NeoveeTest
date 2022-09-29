@@ -99,7 +99,7 @@ class ArticleController extends Controller
                'id' => $article->getId(),
                'titre' => $article->getTitre(),
                'contenu' => $article->getContenu(),
-               'user_id'=> $article->getUser()->getNom(),
+               'user_name'=> $article->getUser()->getNom(),
                'updated_at' => $article->getUpdatedAt(),
                'likes' => $article->getLikes(),
             ];

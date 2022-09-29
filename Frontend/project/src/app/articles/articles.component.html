@@ -1,0 +1,34 @@
+
+<br><div class="container"><div class="jumbotron">
+    <h1 class="display-4">Bonjour Lamine</h1>
+    <p class="lead">Vous nous avez manqué, C'est ce que vous avez manqué pendant que vous étiez hors ligne, amusez-vous.</p>
+    <hr class="my-4">
+    <p>
+        Vous vous sentez motivé pour partager des informations avec vos collègues 
+        <a class="btn btn-success btn float-end" href="#" role="button">Cliquez ici</a></p>
+    <p class="lead">
+    </p>
+  </div></div>
+  <section class="py-5">
+    <div class="container">
+        <!-- FOR DEMO PURPOSE -->
+       
+
+
+        <div class="row" *ngFor="let article of ListArticles">
+            <div class="col-lg-10 mx-auto">
+
+                <!-- CUSTOM BLOCKQUOTE -->
+                <blockquote class="blockquote blockquote-custom bg-white p-5 shadow rounded">
+                    <div class="blockquote-custom-icon bg-success shadow-sm"><i class="fa fa-quote-left text-white"></i></div>
+                    <h4>{{article.titre}}</h4>
+                    <p class="mb-0 mt-2 font-italic">"{{article.contenu}}"</p>
+                    <footer class="blockquote-footer pt-4 mt-4 border-top">Auteur :{{ article.user_name }} 
+                        <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} <i  class="bi float-end fa-2x bi-hand-thumbs-up">45</i></cite>
+                    </footer>
+                </blockquote><!-- END -->
+
+            </div>
+        </div>
+    </div><br><br>
+</section>
