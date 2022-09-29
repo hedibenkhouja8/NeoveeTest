@@ -12,6 +12,8 @@ import { ArticlesComponent } from './articles/articles.component';
 import { HomeComponent } from './home/home.component';
 import { ApiService } from './Services/api.service';
 import { FooterComponent } from './footer/footer.component';
+import { ArticleByUserComponent } from './article-by-user/article-by-user.component';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { FooterComponent } from './footer/footer.component';
     NavbarComponent,
     ArticlesComponent,
     HomeComponent,
-    FooterComponent
+    FooterComponent,
+    ArticleByUserComponent
   ],
   imports: [
     BrowserModule,

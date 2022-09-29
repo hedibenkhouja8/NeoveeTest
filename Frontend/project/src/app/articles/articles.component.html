@@ -1,7 +1,8 @@
 
 <br><div class="container"><div class="jumbotron">
     <h1 class="display-4">Bonjour Lamine</h1>
-    <p class="lead">Vous nous avez manqué, C'est ce que vous avez manqué pendant que vous étiez hors ligne, amusez-vous.</p>
+    <button type="button" class="btn btn-lg btn-dark float-end"  routerLink="/articles/{{1}}"><i class="float-end bi bi-journal-bookmark"> Mes Articles</i></button>
+    <p class="lead">Nous vous attendons toujours , Voici ce que vous avez manqué pendant que vous étiez hors ligne, amusez-vous. </p>
     <hr class="my-4">
     <p>
         Vous vous sentez motivé pour partager des informations avec vos collègues 
@@ -30,5 +31,29 @@
 
             </div>
         </div>
-    </div><br><br>
+    </div><br><br><!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Launch demo modal
+    </button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </section>

@@ -4,9 +4,11 @@ import { ArticlesComponent } from './articles/articles.component';
 
 import { HomeComponent } from './home/home.component';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { ArticleByUserComponent } from './article-by-user/article-by-user.component';
 
 const routes: Routes = [  { path: 'articles', component: ArticlesComponent },
 { path: '', component: HomeComponent},
+{ path: 'articles/:id', component: ArticleByUserComponent },
 
 
 
