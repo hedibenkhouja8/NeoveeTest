@@ -18,67 +18,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class ArticleController extends Controller
 {
     
-     /**
-     * @Route("/article/edit/{id}",name="edit_article")
-     * @Method("PUT")
-     */
-    public function editsArticle(?Article $article, Request $request)
-{
-    // On vérifie si la requête est une requête Ajax
- 
-
-        // On décode les données envoyées
-        $donnees = json_decode($request->getContent());
-
-        // On initialise le code de réponse
-        $code = 200;
-
-        // Si l'article n'est pas trouvé
-        if(!$article){
-            // On instancie un nouvel article
-            $article = new Article();
-            // On change le code de réponse
-            $code = 201;
-        }
-
-        // On hydrate l'objet
-        $article->setTitre($donnees->titre);
-        $article->setContenu($donnees->contenu);
-        $article->setUpdatedAt($donnees->updatedAt);
-
-        // On sauvegarde en base
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($article);
-        $entityManager->flush();
-
-        // On retourne la confirmation
-        return new Response('ok', $code);
-    
-}
    
-
     
      /**
-     * @Route("/articlebyid/{id}",name="show_article")
+     * @Route("/ArticleByUser/{id}",name="show_article")
      * @Method("GET")
      */
-    public function showArticle($id){
-        $article=$this->getDoctrine()->getRepository('ArticleBundle:Article')->find($id);
-       
+    public function ArticleByUser($id){
+        $articles=$this->getDoctrine()->getRepository('ArticleBundle:Article')->findBy(['author' => $id]);
         $formatted = [];
-        
+        foreach ($articles as $article) {
             $formatted[] = [
-               'id' => $article->getId(),
+                'id'=>$article->getId(),
                'titre' => $article->getTitre(),
                'contenu' => $article->getContenu(),
-               'user_id'=> $article->getUser()->getNom(),
-               'likes'=>$article->getLikes()
-               
+               'updated_at' => $article->getUpdatedAt(),
+               'likes' => $article->getLikes(),
             ];
-           
-       
-    
-      return new Response(json_encode($formatted));
+        }
+
+        return new JsonResponse($formatted);
     }
 
 
@@ -117,22 +76,59 @@ class ArticleController extends Controller
      */
     public function createArticle(Request $request)
     {
+        $donnees = json_decode($request->getContent());
 
-        $article = new Article();
-       
-        $form = $this->createForm(ArticleType::class, $article);
-
-        $form->submit($request->request->all());
-
-        
-            $em = $this->get('doctrine.orm.entity_manager');
-            $em->persist($article);
-            $em->flush();
-            
-            return new JsonResponse(['msg'=>'sauvegardé',200]);
+      $id=$donnees->user_id;
       
+      $user=$this->getDoctrine()->getRepository('ArticleBundle:User')->find($id);
+      $article = new Article();
+        $article->setTitre($donnees->titre)
+            ->setContenu($donnees->contenu)
+            ->setUser($user);
 
+        $em = $this->get('doctrine.orm.entity_manager');
+        $em->persist($article);
+        $em->flush();
+        return new JsonResponse("article ajouté");
     } 
+      /**
+     * @Route("/article/edit/{id}",name="edit_article")
+     * @Method("PUT")
+     */
+    public function editsArticle(?Article $article, Request $request)
+{
+    // On vérifie si la requête est une requête Ajax
+ 
+
+        // On décode les données envoyées
+        $donnees = json_decode($request->getContent());
+
+        // On initialise le code de réponse
+        $code = 200;
+
+        // Si l'article n'est pas trouvé
+        if(!$article){
+            // On instancie un nouvel article
+            $article = new Article();
+            // On change le code de réponse
+            $code = 201;
+        }
+
+        // On hydrate l'objet
+        $article->setTitre($donnees->titre);
+        $article->setContenu($donnees->contenu);
+
+        // On sauvegarde en base
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($article);
+        $entityManager->flush();
+
+        // On retourne la confirmation
+        return new Response('ok', $code);
+    
+}
+   
+
 
         /**
         * @Route("/article/supprimer/{id}", name="edit", methods={"DELETE"})

@@ -5,6 +5,7 @@ namespace ArticleBundle\Entity;
 use ArticleBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use ArticleBundle\Entity\Article;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * ArticleLike
@@ -26,12 +27,14 @@ class ArticleLike
     /**
      *
      * @ORM\ManyToOne(targetEntity="Article",inversedBy="likes")
+     * @JoinColumn(onDelete="CASCADE")
      */
     private $article;
 
     /**
      *
      * @ORM\ManyToOne(targetEntity="User",inversedBy="likes")
+     * @JoinColumn(onDelete="CASCADE")
      */
     private $user;
 
