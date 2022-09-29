@@ -10,4 +10,8 @@ namespace ArticleBundle\Repository;
  */
 class ArticleRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAll()
+    {
+        return $this->findBy(array(), array('updatedAt' => 'DESC'));
+    }
 }

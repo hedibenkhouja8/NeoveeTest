@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use ArticleBundle\Entity\Article;
 use Doctrine\Common\Collections\Collection;
 
+use ArticleBundle\Entity\ArticleLike;
+
 /**
  * User
  *
@@ -49,6 +51,11 @@ class User
      * @ORM\OneToMany(targetEntity="Article",mappedBy="user")
      */
     private $articles;
+     /**
+     *
+     * @ORM\OneToMany(targetEntity="ArticleLike",mappedBy="user")
+     */
+    private $likes;
     /**
      *
      * @return Collection|Article
@@ -105,6 +112,15 @@ class User
 
         return $this;
     }
+     /**
+     * Get author
+     *
+     * @return Collection|ArticleLike
+     */
+    public function getLikes():Collection
+    {
+        return $this->likes;
+    }
 
     /**
      * Get email
@@ -160,6 +176,8 @@ class User
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        
+        $this->likedBy = new ArrayCollection();
     }
 }
 

@@ -25,7 +25,7 @@ class ArticleController extends Controller
      * @Method("GET")
      */
     public function ArticleByUser($id){
-        $articles=$this->getDoctrine()->getRepository('ArticleBundle:Article')->findBy(['author' => $id]);
+        $articles=$this->getDoctrine()->getRepository('ArticleBundle:Article')->findBy(['author' => $id], array('updatedAt' => 'DESC'));
         $formatted = [];
         foreach ($articles as $article) {
             $formatted[] = [
@@ -42,7 +42,7 @@ class ArticleController extends Controller
 
 
      /**
-     * @Route("/articles", name="places_list")
+     * @Route("/articles", name="articles_list")
      * @Method({"GET"})
      */
     public function getPlacesAction(Request $request)
@@ -81,11 +81,13 @@ class ArticleController extends Controller
       $id=$donnees->user_id;
       
       $user=$this->getDoctrine()->getRepository('ArticleBundle:User')->find($id);
+      
       $article = new Article();
         $article->setTitre($donnees->titre)
             ->setContenu($donnees->contenu)
             ->setUser($user);
 
+            
         $em = $this->get('doctrine.orm.entity_manager');
         $em->persist($article);
         $em->flush();
@@ -117,6 +119,7 @@ class ArticleController extends Controller
         // On hydrate l'objet
         $article->setTitre($donnees->titre);
         $article->setContenu($donnees->contenu);
+        $article->setUpdatedAt(new \DateTimeImmutable());
 
         // On sauvegarde en base
         $entityManager = $this->getDoctrine()->getManager();
@@ -149,28 +152,7 @@ class ArticleController extends Controller
         return new JsonResponse(['msg'=>'supprimé avec succés',200]);
     }
 
-    /**
-     * @Route("/articles/liste", methods={"GET"})
-     */
-    public function liste()
-    {
-        $articles = $this->getDoctrine()
-        ->getRepository('ArticleBundle:Article')
-        ->findAll();
-    
-        $formatted = [];
-        foreach ($articles as $article) {
-            $formatted[] = [
-               'id' => $article->getId(),
-               'titre' => $article->getTitre(),
-               'contenu' => $article->getContenu(),
-               'user_id'=> $article->getUser()->getNom(),
-               'likes'=>$article->getLikedBy()
-            ];
-        }
-    
-      return new Response(json_encode($formatted));
-    }
+   
      
 }
 

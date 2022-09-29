@@ -10,4 +10,5 @@ namespace ArticleBundle\Repository;
  */
 class ArticleLikeRepository extends \Doctrine\ORM\EntityRepository
 {
+    
 }
