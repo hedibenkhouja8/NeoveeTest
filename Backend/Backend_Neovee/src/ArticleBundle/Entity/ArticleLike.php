@@ -68,13 +68,11 @@ class ArticleLike
     public function getArticle() :?Article
     {
         return $this->article;
-    }
-
-    /**
+    }/**
      * Set user
      *
      */
-    public function setUser(?User $User)
+    public function setUser(?User $user)
     {
         $this->user = $user;
 
@@ -83,10 +81,16 @@ class ArticleLike
 
     /**
      * Get user
+     *
+
      */
-    public function getUser():?User
+    public function getUser() :?User
     {
         return $this->user;
     }
+
+   
+
+  
 }
 

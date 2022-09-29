@@ -5,6 +5,7 @@ use ArticleBundle\Entity\User;
 use ArticleBundle\Entity\Article;
 use ArticleBundle\Form\ArticleType;
 use ArticleBundle\Service\Validate;
+use ArticleBundle\Entity\ArticleLike;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use ArticleBundle\Repository\ArticleRepository;
@@ -153,7 +154,33 @@ class ArticleController extends Controller
     }
 
    
-     
+         /**
+     * @param Request $request
+     * @return JsonResponse
+     * @Route("/like",name="lik")
+     * @Method({"POST"})
+     */
+    public function createlike(Request $request)
+    {
+        $donnees = json_decode($request->getContent());
+
+        $id=$donnees->user_id;
+        $article_id=$donnees->article_id;
+      
+        $user=$this->getDoctrine()->getRepository('ArticleBundle:User')->find($id);
+        $article=$this->getDoctrine()->getRepository('ArticleBundle:Article')->find($article_id);
+      
+      $like = new ArticleLike();
+        $like
+            ->setUser($user)
+            ->setArticle($article);
+
+            
+        $em = $this->get('doctrine.orm.entity_manager');
+        $em->persist($like);
+        $em->flush();
+        return new JsonResponse("article ajouté");
+    }
 }
 
 

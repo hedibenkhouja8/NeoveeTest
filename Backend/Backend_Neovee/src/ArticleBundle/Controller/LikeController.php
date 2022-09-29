@@ -48,13 +48,13 @@ class LikeController extends Controller
         $user_id=$donnees->user_id;
         $article_id=$donnees->article_id;
       
+        $user=$this->getDoctrine()->getRepository('ArticleBundle:User')->find($user_id);
         $article=$this->getDoctrine()->getRepository('ArticleBundle:Article')->find($article_id);
       
        
       $like = new ArticleLike();
       
-      $a=$this->getDoctrine()->getRepository('ArticleBundle:User')->find($user_id);
-        $like->setUser($a);
+        $like->setUser($user);
         $like->setArticle($article);
         dump($like);
 

@@ -4,9 +4,10 @@ namespace ArticleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use ArticleBundle\Entity\Article;
-use Doctrine\Common\Collections\Collection;
-
 use ArticleBundle\Entity\ArticleLike;
+
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
