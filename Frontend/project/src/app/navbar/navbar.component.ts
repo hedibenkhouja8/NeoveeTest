@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  currentUserId: any;
+  constructor() {
+    this.currentUserId = localStorage.getItem('id'); }
 
   ngOnInit(): void {
+  }
+  logout(){
+    localStorage.clear();
+    
+   window.location.href="/"
   }
 
 }

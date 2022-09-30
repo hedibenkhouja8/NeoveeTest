@@ -26,7 +26,7 @@
                     <p class="mb-0 mt-2 font-italic">"{{article.contenu}}"</p>
                     <footer class="blockquote-footer pt-4 mt-4 border-top">Auteur :{{ article.user_name }} 
                         <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} <div *ngIf="article.user_id !=currentUserId">
-                          <i  (click)=" likeArticle(article.id,currentUserId)" class="bi float-end fa-2x bi-hand-thumbs-up" ></i>
+                          <i  (click)=" likeArticle(article.id,currentUserId)" class="text-success bi float-end fa-2x bi-hand-thumbs-up-fill" ></i>
                          <span class="float-end">{{article.likes}}</span></div>
                          <div *ngIf="article.user_id ==currentUserId">
                           <span class="float-end" *ngIf="article.likes >1">{{article.likes}} Personnes ont aimé votre article</span>

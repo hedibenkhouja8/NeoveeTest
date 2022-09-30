@@ -23,10 +23,11 @@ export class HomeComponent implements OnInit {
     this._ApiService.login(data).subscribe((result) => {
       if(result.status == 201) {
        
-        this.router.navigate(['/articles']);
+   window.location.href="/articles"
         localStorage.setItem('id', result.id);
         
         localStorage.setItem('nom', result.nom);
+        
       }
       console.warn(result);
     })
