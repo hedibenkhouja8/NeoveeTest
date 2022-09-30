@@ -13,15 +13,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class LikeController extends Controller
 {
      /**
-     * @Route("/likes", name="get_all")
+     * @Route("/likes/{id}", name="get_all")
      * @Method({"GET"})
      */
-    public function getLikes(Request $request)
+    /*
+    public function getLikes($id)
     {
           $likes = $this->get('doctrine.orm.entity_manager')
                         ->getRepository('ArticleBundle:ArticleLike')
-                        ->findAll();
-
+                        ->findBy(['article' => $id]);
+                        
+                        $size = count($likes);
+dump($size);
         $formatted = [];
         
              foreach ($likes as $like) {
@@ -30,10 +33,10 @@ class LikeController extends Controller
                             'article_id'=> $like->getArticle()->getId(),
                                     ];
                                         }
-
-        return new JsonResponse($formatted);
+                                        $size = count($formatted);
+        return new JsonResponse($size);
         
-    }
+    }*/
      /**
      * @param Request $request
      * @return JsonResponse

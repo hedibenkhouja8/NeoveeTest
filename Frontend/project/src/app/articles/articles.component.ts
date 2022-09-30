@@ -13,7 +13,8 @@ import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-b
 })
 export class ArticlesComponent implements OnInit {
   
-  
+  id:any;
+likes : any ;
   title = 'appBootstrap';
   
   closeResult: string = '';
@@ -71,4 +72,6 @@ export class ArticlesComponent implements OnInit {
       window.location.reload();
     })
   }
+
+
 }

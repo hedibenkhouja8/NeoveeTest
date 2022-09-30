@@ -30,6 +30,7 @@ closeResult: string = '';
     this._ApiService.articlesbyuser(this.id).subscribe((res) => (this.ListArticles = res));
   
   }
+ 
 
   public deleteArticle(id : number){
     this._ApiService.delete(id).subscribe(res => {

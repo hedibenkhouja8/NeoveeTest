@@ -34,6 +34,7 @@ import { likemodel } from '../articles/like.model';
 articlesbyuser(id: number) {
     return this.http.get(this.apiUrl + 'articles/' + id);
   }
+ 
 
 
 

@@ -25,7 +25,12 @@
                     <h4>{{article.titre}}</h4>
                     <p class="mb-0 mt-2 font-italic">"{{article.contenu}}"</p>
                     <footer class="blockquote-footer pt-4 mt-4 border-top">Auteur :{{ article.user_name }} 
-                        <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} <i (click)=" likeArticle(article.id,1)" class="bi float-end fa-2x bi-hand-thumbs-up" >45</i></cite>
+                        <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} <div *ngIf="article.user_id !=1">
+                          <i  (click)=" likeArticle(article.id,1)" class="bi float-end fa-2x bi-hand-thumbs-up" ></i>
+                         <span class="float-end">{{article.likes}}</span></div>
+                         <div *ngIf="article.user_id ==1">
+                          <span class="float-end" *ngIf="article.likes >1">{{article.likes}} Personnes ont aimé votre article</span>
+                          <span class="float-end" *ngIf="article.likes ==1">{{article.likes}} Personne a aimé votre article</span></div> </cite>
                     </footer>
                 </blockquote><!-- END -->
 
@@ -34,7 +39,7 @@
     </div><br><br><!-- Button trigger modal -->
    
     
-   
+  
 <ng-template #mymodal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Ecrivez votre article</h4>
