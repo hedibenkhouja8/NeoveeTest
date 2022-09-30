@@ -6,6 +6,7 @@ import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 
 
+
 @Component({
   selector: 'app-articles',
   templateUrl: './articles.component.html',
@@ -19,7 +20,13 @@ likes : any ;
   
   closeResult: string = '';
   public ListArticles: any = [];
-  constructor(private _ApiService: ApiService,private modalService: NgbModal,private formBuilder:FormBuilder,) { }
+  currentUserName: any;
+  currentUserId: any;
+  constructor(private _ApiService: ApiService,private modalService: NgbModal,private formBuilder:FormBuilder,) { 
+    
+    this.currentUserName = localStorage.getItem('nom');
+    this.currentUserId = localStorage.getItem('id');
+  }
  
 
   ngOnInit(): void {
@@ -57,7 +64,7 @@ likes : any ;
 
   public AddArticle(data:any) {
     
-   
+   data.user_id=localStorage.getItem('id');
     this._ApiService.createArticle(data).subscribe((result) => {
       
       window.location.reload();

@@ -1,7 +1,7 @@
 
 <br><div class="container"><div class="jumbotron">
-    <h1 class="display-4">Bonjour Lamine</h1>
-    <button type="button" class="btn btn-lg btn-dark float-end"  routerLink="/articles/{{1}}"><i class="float-end bi bi-journal-bookmark"> Mes Articles</i></button>
+    <h1 class="display-4">Bonjour {{currentUserName}}</h1>
+    <button type="button" class="btn btn-lg btn-dark float-end"  routerLink="/articles/{{currentUserId}}"><i class="float-end bi bi-journal-bookmark"> Mes Articles</i></button>
     <p class="lead">Nous vous attendons toujours , Voici ce que vous avez manqué pendant que vous étiez hors ligne, amusez-vous. </p>
     <hr class="my-4">
     <p>
@@ -25,12 +25,12 @@
                     <h4>{{article.titre}}</h4>
                     <p class="mb-0 mt-2 font-italic">"{{article.contenu}}"</p>
                     <footer class="blockquote-footer pt-4 mt-4 border-top">Auteur :{{ article.user_name }} 
-                        <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} <div *ngIf="article.user_id !=1">
-                          <i  (click)=" likeArticle(article.id,1)" class="bi float-end fa-2x bi-hand-thumbs-up" ></i>
+                        <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} <div *ngIf="article.user_id !=currentUserId">
+                          <i  (click)=" likeArticle(article.id,currentUserId)" class="bi float-end fa-2x bi-hand-thumbs-up" ></i>
                          <span class="float-end">{{article.likes}}</span></div>
-                         <div *ngIf="article.user_id ==1">
+                         <div *ngIf="article.user_id ==currentUserId">
                           <span class="float-end" *ngIf="article.likes >1">{{article.likes}} Personnes ont aimé votre article</span>
-                          <span class="float-end" *ngIf="article.likes ==1">{{article.likes}} Personne a aimé votre article</span></div> </cite>
+                          <span class="float-end" *ngIf="article.likes ==1">Une seul personne a aimé votre article</span></div> </cite>
                     </footer>
                 </blockquote><!-- END -->
 

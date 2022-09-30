@@ -52,11 +52,18 @@ articlesbyuser(id: number) {
    * @param article new article to create
    */
    createArticle(article: any) :Observable<any>  {
-    article.user_id=1;
     return this.http.post(this.apiUrl + 'ajouter', article).pipe(
       catchError(this.handleError)
   )
-  }
+  } /**
+  * login
+  * @param user 
+  */
+  login(user: any) :Observable<any>  {
+   return this.http.post(this.apiUrl + 'login', user).pipe(
+     catchError(this.handleError)
+ )
+ }
  
 
 
