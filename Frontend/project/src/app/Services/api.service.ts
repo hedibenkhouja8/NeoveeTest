@@ -10,58 +10,66 @@ import { likemodel } from '../articles/like.model';
 @Injectable()
    
   export class ApiService { 
+    private apiUrl ='http://127.0.0.1:8000/';
     constructor(private http: HttpClient) {}
     
   
   
   public Like: likemodel = new likemodel;
+
     /**
-     *Get all articless
+     *Get all articles
      * @returns Observable<any>
      */
     allarticles() {
-      return this.http.get("http://127.0.0.1:8000/articles");
+      return this.http.get(this.apiUrl+ 'articles');
     }
+
+
     /**
- * Get a buy with the given id
- * @param id : buy id
- * @returns Observable<Buy>
+ * Get articles with given user id
+ * @param id : article id
+ * @returns Observable<Article>
  */
 articlesbyuser(id: number) {
-    return this.http.get("http://127.0.0.1:8000/ArticleByUser/" + id);
+    return this.http.get(this.apiUrl + 'articles/' + id);
   }
+
+
+
 /**
- * Delete a buy with the given id
- * @param id buy id to delete
+ * Delete an article with the given id
+ * @param id article id to delete
  */
  delete(id: number) {
-    return this.http.delete("http://127.0.0.1:8000/article/supprimer/" + id);
+    return this.http.delete(this.apiUrl + 'supprimer/' + id);
   }
+
+
   /**
-   * Create a new rent
-   * @param article new rent to create
+   * Create a new article
+   * @param article new article to create
    */
    createArticle(article: any) :Observable<any>  {
     article.user_id=1;
-    return this.http.post("http://127.0.0.1:8000/Articles", article).pipe(
+    return this.http.post(this.apiUrl + 'ajouter', article).pipe(
       catchError(this.handleError)
   )
   }
-   /**
-   * Create a new rent
-   * @param like new rent to create
-   */
+ 
+
+
     like(article_id: number,user_id:number) :Observable<any>  {
  
-      
-  
       this.Like.article_id=article_id;
       this.Like.user_id=user_id;
    
-      return this.http.post("http://127.0.0.1:8000/LikeArticles", this.Like).pipe(
+      return this.http.post(this.apiUrl+'LikeArticles', this.Like).pipe(
         catchError(this.handleError)
     )
     }
+
+
    /**
    *
    * @param error 
@@ -79,12 +87,13 @@ articlesbyuser(id: number) {
         return throwError(msg);
       }
 
+      
         /**
-   * Update a rent with the given id
-   * @param id rent id to update
-   * @param rent new course data
+   * Update a article with the given id
+   * @param id article id to update
+   * @param article new course data
    */
   update(id: number, article: any) {
-    return this.http.put("http://127.0.0.1:8000/article/edit/"+ id, article);
+    return this.http.put(this.apiUrl + 'modifier/' + id, article);
   }
   }

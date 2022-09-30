@@ -22,12 +22,19 @@ class ArticleController extends Controller
    
     
      /**
-     * @Route("/ArticleByUser/{id}",name="show_article")
+     * @param Request $request
+     * @return JsonResponse
+     * @Route("/articles/{id}",name="show_article_by_user")
      * @Method("GET")
      */
     public function ArticleByUser($id){
-        $articles=$this->getDoctrine()->getRepository('ArticleBundle:Article')->findBy(['author' => $id], array('updatedAt' => 'DESC'));
+
+         $articles=$this->getDoctrine()
+                        ->getRepository('ArticleBundle:Article')
+                        ->findBy(['author' => $id], array('updatedAt' => 'DESC'));
+
         $formatted = [];
+
         foreach ($articles as $article) {
             $formatted[] = [
                 'id'=>$article->getId(),
@@ -42,15 +49,17 @@ class ArticleController extends Controller
     }
 
 
-     /**
+     /** 
+     * @param Request $request
+     * @return JsonResponse
      * @Route("/articles", name="articles_list")
      * @Method({"GET"})
      */
-    public function getPlacesAction(Request $request)
+    public function getAllarticles(Request $request)
     {
-        $articles = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('ArticleBundle:Article')
-                ->findAll();
+           $articles = $this->get('doctrine.orm.entity_manager')
+                            ->getRepository('ArticleBundle:Article')
+                            ->findAll();
         
 
         $formatted = [];
@@ -72,35 +81,40 @@ class ArticleController extends Controller
     /**
      * @param Request $request
      * @return JsonResponse
-     * @Route("/Articles",name="create_article")
+     * @Route("/ajouter",name="create_article")
      * @Method({"POST"})
      */
     public function createArticle(Request $request)
     {
         $donnees = json_decode($request->getContent());
 
-      $id=$donnees->user_id;
+        $id=$donnees->user_id;
       
-      $user=$this->getDoctrine()->getRepository('ArticleBundle:User')->find($id);
+        $user=$this->getDoctrine()->getRepository('ArticleBundle:User')->find($id);
       
-      $article = new Article();
+        $article = new Article();
+
         $article->setTitre($donnees->titre)
-            ->setContenu($donnees->contenu)
-            ->setUser($user);
+                ->setContenu($donnees->contenu)
+                ->setUser($user);
 
             
         $em = $this->get('doctrine.orm.entity_manager');
+
         $em->persist($article);
+
         $em->flush();
+
         return new JsonResponse("article ajouté");
     } 
+
+    
       /**
-     * @Route("/article/edit/{id}",name="edit_article")
+     * @Route("/modifier/{id}",name="edit_article")
      * @Method("PUT")
      */
-    public function editsArticle(?Article $article, Request $request)
-{
-    // On vérifie si la requête est une requête Ajax
+    public function editArticle(?Article $article, Request $request)
+    {
  
 
         // On décode les données envoyées
@@ -119,68 +133,49 @@ class ArticleController extends Controller
 
         // On hydrate l'objet
         $article->setTitre($donnees->titre);
+
         $article->setContenu($donnees->contenu);
+
         $article->setUpdatedAt(new \DateTimeImmutable());
 
         // On sauvegarde en base
         $entityManager = $this->getDoctrine()->getManager();
+
         $entityManager->persist($article);
+
         $entityManager->flush();
 
         // On retourne la confirmation
-        return new Response('ok', $code);
+        return new Response('article modifié avec succès', $code);
     
 }
    
 
 
         /**
-        * @Route("/article/supprimer/{id}", name="edit", methods={"DELETE"})
+        * @Route("/supprimer/{id}", name="supprimer")
+        * @Method("DELETE")
         */
-    public function removeUserAction(Request $request)
+    public function deleteArticle(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
+
         $article = $em->getRepository('ArticleBundle:Article')
-                    ->find($request->get('id'));
-        /* @var $user User */
+                      ->find($request->get('id'));
+      
 
         if ($article) {
+
             $em->remove($article);
+
             $em->flush();
             
         }
         
-        return new JsonResponse(['msg'=>'supprimé avec succés',200]);
+        return new JsonResponse("article supprimé avec succès");
     }
 
    
-         /**
-     * @param Request $request
-     * @return JsonResponse
-     * @Route("/like",name="lik")
-     * @Method({"POST"})
-     */
-    public function createlike(Request $request)
-    {
-        $donnees = json_decode($request->getContent());
-
-        $id=$donnees->user_id;
-        $article_id=$donnees->article_id;
-      
-        $user=$this->getDoctrine()->getRepository('ArticleBundle:User')->find($id);
-        $article=$this->getDoctrine()->getRepository('ArticleBundle:Article')->find($article_id);
-      
-      $like = new ArticleLike();
-        $like
-            ->setUser($user)
-            ->setArticle($article);
-
-            
-        $em = $this->get('doctrine.orm.entity_manager');
-        $em->persist($like);
-        $em->flush();
-        return new JsonResponse("article ajouté");
-    }
 }
 
 

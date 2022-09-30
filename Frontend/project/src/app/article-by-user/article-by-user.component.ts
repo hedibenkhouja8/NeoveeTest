@@ -25,10 +25,12 @@ closeResult: string = '';
     this.id=this.route.snapshot.params['id'];
     this.articlesbyuser();
   }
+  
   public articlesbyuser(){
     this._ApiService.articlesbyuser(this.id).subscribe((res) => (this.ListArticles = res));
   
   }
+
   public deleteArticle(id : number){
     this._ApiService.delete(id).subscribe(res => {
      

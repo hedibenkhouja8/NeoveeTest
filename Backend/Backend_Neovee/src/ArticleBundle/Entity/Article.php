@@ -129,7 +129,7 @@ class Article
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updatedAt = new \DateTime('now', new \DateTimeZone('America/Sao_Paulo'));
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }

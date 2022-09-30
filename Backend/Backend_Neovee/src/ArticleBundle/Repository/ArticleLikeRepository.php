@@ -10,5 +10,8 @@ namespace ArticleBundle\Repository;
  */
 class ArticleLikeRepository extends \Doctrine\ORM\EntityRepository
 {
-    
+    public function findLike()
+    {
+        return $this->findBy(array(), array('updatedAt' => 'DESC'));
+    }
 }

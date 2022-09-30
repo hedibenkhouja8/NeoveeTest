@@ -24,10 +24,15 @@ export class ArticlesComponent implements OnInit {
   ngOnInit(): void {
     this.getAllArticles();
   }
+
+  
   public getAllArticles(){
     this._ApiService.allarticles().subscribe((res) => (this.ListArticles = res));
   
   }
+
+
+
   open(content:any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -35,6 +40,8 @@ export class ArticlesComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+
+
   
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -45,6 +52,8 @@ export class ArticlesComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
+
+
   public AddArticle(data:any) {
     
    
@@ -52,7 +61,9 @@ export class ArticlesComponent implements OnInit {
       
       window.location.reload();
     })
-  } public likeArticle(article_id:number,user_id:number) {
+  } 
+  
+  public likeArticle(article_id:number,user_id:number) {
     
    
     this._ApiService.like(article_id,user_id).subscribe((result) => {

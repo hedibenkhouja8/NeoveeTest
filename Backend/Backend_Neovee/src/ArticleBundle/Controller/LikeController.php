@@ -13,24 +13,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class LikeController extends Controller
 {
      /**
-     * @Route("/likes", name="places_list")
+     * @Route("/likes", name="get_all")
      * @Method({"GET"})
      */
     public function getLikes(Request $request)
     {
-        $likes = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('ArticleBundle:ArticleLike')
-                ->findAll();
-        
+          $likes = $this->get('doctrine.orm.entity_manager')
+                        ->getRepository('ArticleBundle:ArticleLike')
+                        ->findAll();
 
         $formatted = [];
-        foreach ($likes as $like) {
-            $formatted[] = [
-               
-                'user_id'=> $like->getUser()->getId(),
-                'article_id'=> $like->getArticle()->getId(),
-            ];
-        }
+        
+             foreach ($likes as $like) {
+                     $formatted[] = [
+                            'user_id'=> $like->getUser()->getId(),
+                            'article_id'=> $like->getArticle()->getId(),
+                                    ];
+                                        }
 
         return new JsonResponse($formatted);
         
@@ -46,27 +45,35 @@ class LikeController extends Controller
         $donnees = json_decode($request->getContent());
 
         $user_id=$donnees->user_id;
+
         $article_id=$donnees->article_id;
       
         $user=$this->getDoctrine()->getRepository('ArticleBundle:User')->find($user_id);
+
         $article=$this->getDoctrine()->getRepository('ArticleBundle:Article')->find($article_id);
         
-        $l=$this->getDoctrine()->getRepository('ArticleBundle:ArticleLike')
-        ->findOneBy(array('user' => $user_id, 'article' => $article_id));
+        $l=$this->getDoctrine()
+                ->getRepository('ArticleBundle:ArticleLike')
+                ->findOneBy(array('user' => $user_id, 'article' => $article_id));
         if($l){
          
         return new JsonResponse("like existe déja");
-        }else{
-    
-       
-      $like = new ArticleLike();
+
+        }
+        else{
+      
+         $like = new ArticleLike();
       
         $like->setUser($user);
+
         $like->setArticle($article);
 
         $em = $this->get('doctrine.orm.entity_manager');
+
         $em->persist($like);
+
         $em->flush();
+
         return new JsonResponse("like ajouté");}
     } 
     
