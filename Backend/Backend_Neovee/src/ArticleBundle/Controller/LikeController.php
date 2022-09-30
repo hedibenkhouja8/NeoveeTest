@@ -50,18 +50,24 @@ class LikeController extends Controller
       
         $user=$this->getDoctrine()->getRepository('ArticleBundle:User')->find($user_id);
         $article=$this->getDoctrine()->getRepository('ArticleBundle:Article')->find($article_id);
-      
+        
+        $l=$this->getDoctrine()->getRepository('ArticleBundle:ArticleLike')
+        ->findOneBy(array('user' => $user_id, 'article' => $article_id));
+        if($l){
+         
+        return new JsonResponse("like existe déja");
+        }else{
+    
        
       $like = new ArticleLike();
       
         $like->setUser($user);
         $like->setArticle($article);
-        dump($like);
 
         $em = $this->get('doctrine.orm.entity_manager');
         $em->persist($like);
         $em->flush();
-        return new JsonResponse("like ajouté");
+        return new JsonResponse("like ajouté");}
     } 
     
     

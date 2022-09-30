@@ -13,7 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { ApiService } from './Services/api.service';
 import { FooterComponent } from './footer/footer.component';
 import { ArticleByUserComponent } from './article-by-user/article-by-user.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { ArticleByUserComponent } from './article-by-user/article-by-user.compon
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule, HttpClientModule,FormsModule,ReactiveFormsModule
+    AppRoutingModule, HttpClientModule,FormsModule,ReactiveFormsModule,NgbModule
   ],
   providers: [ ApiService],
   bootstrap: [AppComponent]

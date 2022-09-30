@@ -6,7 +6,7 @@
     <hr class="my-4">
     <p>
         Vous vous sentez motivé pour partager des informations avec vos collègues 
-        <a class="btn btn-success btn float-end" href="#" role="button">Cliquez ici</a></p>
+        <button class="btn  btn-success float-end" (click)="open(mymodal)">Publier un article</button>
     <p class="lead">
     </p>
   </div></div>
@@ -25,35 +25,37 @@
                     <h4>{{article.titre}}</h4>
                     <p class="mb-0 mt-2 font-italic">"{{article.contenu}}"</p>
                     <footer class="blockquote-footer pt-4 mt-4 border-top">Auteur :{{ article.user_name }} 
-                        <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} <i  class="bi float-end fa-2x bi-hand-thumbs-up">45</i></cite>
+                        <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} <i (click)=" likeArticle(article.id,1)" class="bi float-end fa-2x bi-hand-thumbs-up" >45</i></cite>
                     </footer>
                 </blockquote><!-- END -->
 
             </div>
         </div>
     </div><br><br><!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-      Launch demo modal
-    </button>
+   
     
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
+   
+<ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Ecrivez votre article</h4>
+    
+   
+  </div>
+  <div class="modal-body">
+    <form #articlesForm="ngForm" (ngSubmit)="AddArticle(articlesForm.value)" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Titre:</label>
+        <input type="text" class="form-control" placeholder="Ecrire votre titre" id="recipient-name" ngModel name="titre">
+       </div>
+      <div class="form-group">
+        <label for="message-text" class="col-form-label">Contenu:</label>
+        <textarea style="height:6cm;"  class="form-control" placeholder="Vous etes libre" ngModel name="contenu" id="message-text"></textarea>
       </div>
-    </div>
+      <br><div class="float-end">
+    <button type="submit" class="btn  btn-success" (click)="modal.close('Save click')">Publier</button>&nbsp;
+    <button type="button" class="btn  btn-outline-dark" (click)="modal.dismiss('Cross click')">Annuler</button>
+</div> </form>
+  </div>
+ 
+</ng-template>
 </section>

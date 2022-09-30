@@ -25,12 +25,36 @@
                     <footer class="blockquote-footer pt-4 mt-4 border-top">Mis à jour
                         <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} &nbsp;&nbsp; </cite>
                         
-<button type="button" class=" btn btn-warning">Modifier</button>
+        <button class="btn  btn-warning" (click)="open(mymodal,article)">Modifier</button>
 <button type="button" class="float-end btn btn-danger" (click)=" deleteArticle(article.id)" onclick="confirm('Voulez vous vraiment supprime cet article')"><i class="bi bi-trash"></i></button>
-                    </footer>
+                  </footer>
                 </blockquote><!-- END -->
 
-            </div>
+            </div> <ng-template #mymodal let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title" id="modal-basic-title">Ecrivez votre article</h4>
+                  
+                 
+                </div>
+                <div class="modal-body">
+                  <form  #articlesForm="ngForm" (ngSubmit)="UpdateArticle(articlesForm.value,article.id)" enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Titre:</label>
+                      <input type="text" value="{{article.titre}}" class="form-control"  id="recipient-name" ngModel name="titre" >
+                     
+                    </div>
+                    <div class="form-group">
+                      <label for="message-text" class="col-form-label">Contenu:</label>
+                      <textarea style="height:6cm;" class="form-control" placeholder="Vous etes libre" ngModel name="contenu" id="message-text"></textarea>
+                    </div>
+                    <br><div class="float-end">
+                  <button type="submit" class="btn  btn-warning" (click)="modal.close('Save click')">Modifier</button>&nbsp;
+                  <button type="button" class="btn  btn-outline-dark" (click)="modal.dismiss('Cross click')">Annuler</button>
+              </div> </form>
+                </div>
+               
+              </ng-template>
         </div>
     </div><br><br>
+   
 </section>
