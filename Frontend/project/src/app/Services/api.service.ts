@@ -31,8 +31,16 @@ import { likemodel } from '../articles/like.model';
  * @param id : article id
  * @returns Observable<Article>
  */
-articlesbyuser(id: number) {
-    return this.http.get(this.apiUrl + 'articles/' + id);
+     articlesbyuser(id: number) {
+      return this.http.get(this.apiUrl + 'articles/' + id);
+    }
+
+    /**
+ * check if article is already liked
+ */
+likeExists(user_id: number,article_id : number) {
+  
+    return this.http.get(this.apiUrl + 'likes/' + user_id +'/'+article_id);
   }
  
 

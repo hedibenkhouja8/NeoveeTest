@@ -13,30 +13,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class LikeController extends Controller
 {
      /**
-     * @Route("/likes/{id}", name="get_all")
+     * @Route("/likes/{user_id}/{article_id}", name="get_all")
      * @Method({"GET"})
      */
-    /*
-    public function getLikes($id)
+    
+    public function isLiked($user_id,$article_id)
     {
-          $likes = $this->get('doctrine.orm.entity_manager')
+          $like = $this->get('doctrine.orm.entity_manager')
                         ->getRepository('ArticleBundle:ArticleLike')
-                        ->findBy(['article' => $id]);
                         
-                        $size = count($likes);
-dump($size);
-        $formatted = [];
+        ->findOneBy(array('user' => $user_id, 'article' => $article_id));
+                        if($like)
+                return new JsonResponse(1);
+                else
+                
+                return new JsonResponse(0);
+
         
-             foreach ($likes as $like) {
-                     $formatted[] = [
-                            'user_id'=> $like->getUser()->getId(),
-                            'article_id'=> $like->getArticle()->getId(),
-                                    ];
-                                        }
-                                        $size = count($formatted);
-        return new JsonResponse($size);
-        
-    }*/
+    }
      /**
      * @param Request $request
      * @return JsonResponse
@@ -46,6 +40,8 @@ dump($size);
     public function LikeArticle(Request $request)
     {
         $donnees = json_decode($request->getContent());
+        
+        $em = $this->get('doctrine.orm.entity_manager');
 
         $user_id=$donnees->user_id;
 
@@ -59,8 +55,10 @@ dump($size);
                 ->getRepository('ArticleBundle:ArticleLike')
                 ->findOneBy(array('user' => $user_id, 'article' => $article_id));
         if($l){
-         
-        return new JsonResponse("like existe déja");
+            $em->remove($l);
+
+            $em->flush();
+        return new JsonResponse("like supprimé");
 
         }
         else{
@@ -71,7 +69,6 @@ dump($size);
 
         $like->setArticle($article);
 
-        $em = $this->get('doctrine.orm.entity_manager');
 
         $em->persist($like);
 

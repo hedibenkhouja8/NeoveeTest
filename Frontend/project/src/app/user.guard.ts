@@ -16,7 +16,6 @@ export class UserGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
      
       if(localStorage.getItem('id')==route.paramMap.get('id')){
-        console.log(route.paramMap.get('id'));
         return true
       } else{
         this.router.navigate(['/articles/'+ localStorage.getItem('id')])

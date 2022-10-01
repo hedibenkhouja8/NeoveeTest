@@ -1,4 +1,4 @@
-
+<app-navbar></app-navbar>
 <br><div class="container"><div class="jumbotron">
     <h1 class="display-4">Mes Articles</h1>
     <p class="lead">Voici vos articles récemment publiés </p>
@@ -23,10 +23,14 @@
                     <h4>{{article.titre}}</h4>
                     <p class="mb-0 mt-2 font-italic">"{{article.contenu}}"</p>
                     <footer class="blockquote-footer pt-4 mt-4 border-top">Mis à jour
-                        <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} &nbsp;&nbsp; </cite>
-                        
-        <button class="btn  btn-warning" (click)="open(mymodal,article)">Modifier</button>
-<button type="button" class="float-end btn btn-danger" (click)=" deleteArticle(article.id)" onclick="confirm('Voulez vous vraiment supprime cet article')"><i class="bi bi-trash"></i></button>
+                        <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} &nbsp;&nbsp; 
+                          
+                          <span class="float-end" *ngIf="article.likes >1">{{article.likes}} Personnes ont aimé votre article</span>
+                          <span class="float-end" *ngIf="article.likes == 0"> Personnes n'a encore  aimé votre article</span>
+                          <span class="float-end" *ngIf="article.likes ==1">Une seul personne a aimé votre article</span>
+                        </cite>
+        <button class="btn  btn-warning" (click)="open(mymodal,article)">Modifier</button>&nbsp; 
+<button type="button" class=" btn btn-danger" (click)=" deleteArticle(article.id)" onclick="confirm('Voulez vous vraiment supprime cet article')"><i class="bi bi-trash"></i></button>
                   </footer>
                 </blockquote><!-- END -->
 

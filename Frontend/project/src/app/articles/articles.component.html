@@ -1,11 +1,13 @@
-
+<app-navbar></app-navbar>
 <br><div class="container"><div class="jumbotron">
     <h1 class="display-4">Bonjour {{currentUserName}}</h1>
     <button type="button" class="btn btn-lg btn-dark float-end"  routerLink="/articles/{{currentUserId}}"><i class="float-end bi bi-journal-bookmark"> Mes Articles</i></button>
     <p class="lead">Nous vous attendons toujours , Voici ce que vous avez manqué pendant que vous étiez hors ligne, amusez-vous. </p>
     <hr class="my-4">
     <p>
-        Vous vous sentez motivé pour partager des informations avec vos collègues 
+        Vous vous sentez motivé pour partager des informations avec vos collègues <div #myNameElem></div>
+
+        <button (click)="enableDisableRule()" [ngClass]="{'green' : toggle, 'red': !toggle}">Get Value</button>
         <button class="btn  btn-success float-end" (click)="open(mymodal)">Publier un article</button>
     <p class="lead">
     </p>
@@ -24,12 +26,17 @@
                     <div class="blockquote-custom-icon bg-success shadow-sm"><i class="fa fa-quote-left text-white"></i></div>
                     <h4>{{article.titre}}</h4>
                     <p class="mb-0 mt-2 font-italic">"{{article.contenu}}"</p>
-                    <footer class="blockquote-footer pt-4 mt-4 border-top">Auteur :{{ article.user_name }} 
-                        <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} <div *ngIf="article.user_id !=currentUserId">
-                          <i  (click)=" likeArticle(article.id,currentUserId)" class="text-success bi float-end fa-2x bi-hand-thumbs-up-fill" ></i>
-                         <span class="float-end">{{article.likes}}</span></div>
+                    <footer class="blockquote-footer pt-4 mt-4 border-top"><div *ngIf="article.user_id !=currentUserId"></div>Auteur :{{ article.user_name }} 
+                        <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} 
+                          <div *ngIf="article.user_id !=currentUserId">
+                        <a >  
+                          <i   (click)=" likeArticle(article.id,currentUserId)" class="text-success bi float-end fa-2x bi-hand-thumbs-up-fill" ></i>
+                          <i   (click)=" likeArticle(article.id,currentUserId)" class="text-success bi float-end fa-2x bi-hand-thumbs-up-fill" ></i>
+                        </a>
+                        <span class="float-end">{{article.likes}}</span></div>
                          <div *ngIf="article.user_id ==currentUserId">
                           <span class="float-end" *ngIf="article.likes >1">{{article.likes}} Personnes ont aimé votre article</span>
+                          <span class="float-end" *ngIf="article.likes == 0"> Personnes n'a encore  aimé votre article</span>
                           <span class="float-end" *ngIf="article.likes ==1">Une seul personne a aimé votre article</span></div> </cite>
                     </footer>
                 </blockquote><!-- END -->
@@ -64,3 +71,9 @@
  
 </ng-template>
 </section>
+<script>const btn = document.getElementById('btn');
+
+  btn.addEventListener('click', function onClick() {
+    btn.style.backgroundColor = 'salmon';
+    btn.style.color = 'white';
+  });</script>

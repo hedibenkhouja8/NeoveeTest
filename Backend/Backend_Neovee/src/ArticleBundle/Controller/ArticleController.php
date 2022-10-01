@@ -182,6 +182,51 @@ class ArticleController extends Controller
     }
 
    
+     /** 
+     * @param Request $request
+     * @return JsonResponse
+     * @Route("/articles", name="articles_list")
+     * @Method({"GET"})
+     *//*
+    public function getAllarticles(Request $request)
+    {
+           $articles = $this->get('doctrine.orm.entity_manager')
+                            ->getRepository('ArticleBundle:Article')
+                            ->findAll();
+           
+
+        $formatted = [];
+        foreach ($articles as $article) {
+            $likes = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('ArticleBundle:ArticleLike')
+            ->findBy(['article' => $article->getId()]);
+            
+            $size = count($likes);
+            $formatted[] = [
+                'id' => $article->getId(),
+                'titre' => $article->getTitre(),
+                'contenu' => $article->getContenu(),
+                'user_name'=> $article->getUser()->getNom(),
+                'user_id'=> $article->getUser()->getId(),
+                'updated_at' => $article->getUpdatedAt(),
+                'likes' => $size,'likers' => 1,
+                foreach ($likes as $like){
+                   'likers'=>1 
+                }
+             ];
+            foreach ($likes as $like) {
+                $f[] = [
+                    'like_id'=>$like->getId(),
+                    'article'=>$like->getArticle()->getId(),
+                    'user_id' =>$like->getUser()->getId()];
+                    
+            } 
+            
+        }
+
+        return new JsonResponse($f);
+        
+    }*/
 }
 
 
