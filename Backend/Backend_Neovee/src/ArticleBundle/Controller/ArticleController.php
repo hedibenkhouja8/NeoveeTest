@@ -41,10 +41,11 @@ class ArticleController extends Controller
                'titre' => $article->getTitre(),
                'contenu' => $article->getContenu(),
                'updated_at' => $article->getUpdatedAt(),
+               
+               'user_id'=> $article->getUser()->getId(),
                'likes' => $article->getLikes(),
             ];
         }
-
         return new JsonResponse($formatted);
     }
 

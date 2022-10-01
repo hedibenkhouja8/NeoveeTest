@@ -86,15 +86,14 @@ likes : any ;
       window.location.reload();
     })
   } 
-  change(){
-    console.log('rororo')
-  }
+  
   public likeArticle(article_id:number,user_id:number) {
     let idx = _.findIndex(this.ListArticles,{id:article_id});
     if(idx>-1){
       this._ApiService.likeExists(user_id,article_id).subscribe(data => {
-if(data!=1){
-        this.ListArticles[idx]['likes']=this.ListArticles[idx]['likes']+1;
+if(data==1){
+        
+      this.ListArticles[idx]['likes']=this.ListArticles[idx]['likes']+1;
      } 
     else{
       

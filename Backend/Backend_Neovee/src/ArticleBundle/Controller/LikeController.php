@@ -68,8 +68,6 @@ class LikeController extends Controller
         $like->setUser($user);
 
         $like->setArticle($article);
-
-
         $em->persist($like);
 
         $em->flush();

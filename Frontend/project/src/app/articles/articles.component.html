@@ -5,9 +5,8 @@
     <p class="lead">Nous vous attendons toujours , Voici ce que vous avez manqué pendant que vous étiez hors ligne, amusez-vous. </p>
     <hr class="my-4">
     <p>
-        Vous vous sentez motivé pour partager des informations avec vos collègues <div #myNameElem></div>
+        Vous vous sentez motivé pour partager des informations avec vos collègues 
 
-        <button (click)="enableDisableRule()" [ngClass]="{'green' : toggle, 'red': !toggle}">Get Value</button>
         <button class="btn  btn-success float-end" (click)="open(mymodal)">Publier un article</button>
     <p class="lead">
     </p>
@@ -26,13 +25,12 @@
                     <div class="blockquote-custom-icon bg-success shadow-sm"><i class="fa fa-quote-left text-white"></i></div>
                     <h4>{{article.titre}}</h4>
                     <p class="mb-0 mt-2 font-italic">"{{article.contenu}}"</p>
-                    <footer class="blockquote-footer pt-4 mt-4 border-top"><div *ngIf="article.user_id !=currentUserId"></div>Auteur :{{ article.user_name }} 
+                    <footer class="blockquote-footer pt-4 mt-4 border-top">Auteur :{{ article.user_name }} 
                         <cite title="Source Title"> le {{ article.updated_at.date | date :'short' }} 
                           <div *ngIf="article.user_id !=currentUserId">
                         <a >  
                           <i   (click)=" likeArticle(article.id,currentUserId)" class="text-success bi float-end fa-2x bi-hand-thumbs-up-fill" ></i>
-                          <i   (click)=" likeArticle(article.id,currentUserId)" class="text-success bi float-end fa-2x bi-hand-thumbs-up-fill" ></i>
-                        </a>
+                         </a>
                         <span class="float-end">{{article.likes}}</span></div>
                          <div *ngIf="article.user_id ==currentUserId">
                           <span class="float-end" *ngIf="article.likes >1">{{article.likes}} Personnes ont aimé votre article</span>
@@ -57,11 +55,11 @@
     <form #articlesForm="ngForm" (ngSubmit)="AddArticle(articlesForm.value)" enctype="multipart/form-data">
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Titre:</label>
-        <input type="text" class="form-control" placeholder="Ecrire votre titre" id="recipient-name" ngModel name="titre">
+        <input required type="text" class="form-control" placeholder="Ecrire votre titre" id="recipient-name" ngModel name="titre">
        </div>
       <div class="form-group">
         <label for="message-text" class="col-form-label">Contenu:</label>
-        <textarea style="height:6cm;"  class="form-control" placeholder="Vous etes libre" ngModel name="contenu" id="message-text"></textarea>
+        <textarea required style="height:6cm;"  class="form-control" placeholder="Vous etes libre" ngModel name="contenu" id="message-text"></textarea>
       </div>
       <br><div class="float-end">
     <button type="submit" class="btn  btn-success" (click)="modal.close('Save click')">Publier</button>&nbsp;
@@ -71,9 +69,3 @@
  
 </ng-template>
 </section>
-<script>const btn = document.getElementById('btn');
-
-  btn.addEventListener('click', function onClick() {
-    btn.style.backgroundColor = 'salmon';
-    btn.style.color = 'white';
-  });</script>

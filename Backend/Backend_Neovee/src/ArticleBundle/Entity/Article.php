@@ -181,7 +181,7 @@ class Article
     public function __construct()
     {
         $this->updatedAt = new \DateTimeImmutable();
-        $this->likedBy = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
    
 }
