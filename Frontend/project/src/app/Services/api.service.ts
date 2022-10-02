@@ -40,9 +40,14 @@ import { likemodel } from '../articles/like.model';
  */
 likeExists(user_id: number,article_id : number) {
   
-    return this.http.get(this.apiUrl + 'likes/' + user_id +'/'+article_id);
-  }
- 
+  return this.http.get(this.apiUrl + 'likes/' + user_id +'/'+article_id);
+}
+
+LikedArticles(user_id: any) {
+  
+  return this.http.get(this.apiUrl + 'likesByUser/' + user_id );
+}
+
 
 
 

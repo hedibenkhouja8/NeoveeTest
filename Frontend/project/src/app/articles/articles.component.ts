@@ -19,6 +19,7 @@ export class ArticlesComponent implements OnInit {
   toggle = true;
   id:any;
   liked:any;
+  l:any;
 likes : any ;
   title = 'appBootstrap';
   
@@ -52,6 +53,13 @@ likes : any ;
     if(this.liked==1)
     return 1;
     else return 0;
+  
+  }public LikedArticles(  ){
+   let info;
+    this._ApiService.LikedArticles(this.currentUserId).subscribe((res) => (info = res));
+   console.log(info);
+    //return this.l.indexOf(this.currentUserId) >-1
+    
   
   }
 
@@ -107,7 +115,7 @@ if(data==1){
     })
   }
   isArticleLikedByUser(article:any) :boolean {
-    
+    this.currentUserId
     return article['likers'].indexOf(this.currentUserId) >-1
 
   }

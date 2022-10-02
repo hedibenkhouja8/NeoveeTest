@@ -114,7 +114,7 @@ class User
         return $this;
     }
      /**
-     * Get author
+     * Get user
      *
      * @return Collection|ArticleLike
      */
@@ -170,6 +170,15 @@ class User
 
     public function eraseCredentials()
     {
+    }
+
+    public function addLike(ArticleLike $like):Collection
+    {
+        if ($this->likes->contains($like)) {
+         $this->likes[]=$like;
+         $like->setUser($this);
+        }
+        return $this;
     }
      /**
      * Article constructor.

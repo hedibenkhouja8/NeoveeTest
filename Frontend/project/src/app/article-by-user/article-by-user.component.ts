@@ -16,10 +16,19 @@ id:any;
 
 articlemodel: articlemodel = new articlemodel();
 title = 'appBootstrap';
+
+public formValue: FormGroup;
   
 closeResult: string = '';
   public ListArticles: any = [];
-  constructor(private _ApiService: ApiService, private route: ActivatedRoute,private modalService: NgbModal,private formBuilder:FormBuilder) { }
+  constructor(private _ApiService: ApiService, private route: ActivatedRoute,private modalService: NgbModal,private formBuilder:FormBuilder) { 
+    this.formValue = this.formBuilder.group({
+      titre: [Validators.required],
+      contenu: [Validators.required]
+    
+
+    });
+  }
 
   ngOnInit(): void {
     this.id=this.route.snapshot.params['id'];
@@ -43,7 +52,9 @@ closeResult: string = '';
   
   open(content:any,article:any) {
     this.articlemodel=article.id;
-    console.warn(article.id);
+    
+  this.formValue.controls['titre'].setValue(article.titre);
+  this.formValue.controls['contenu'].setValue(article.contenu);
     
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

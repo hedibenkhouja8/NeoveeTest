@@ -30,7 +30,29 @@ class LikeController extends Controller
                 return new JsonResponse(0);
 
         
-    }
+    } /**
+    * @Route("/likesByUser/{user_id}", name="get_all_liked")
+    * @Method({"GET"})
+    */
+   
+   public function likesByUser($user_id)
+   {
+         $likes = $this->get('doctrine.orm.entity_manager')
+                       ->getRepository('ArticleBundle:ArticleLike')
+                       
+       ->findBy(['user' => $user_id]);
+       $output = array();
+       $formatted = [];
+
+        foreach ($likes as $like) {
+            
+    $output[] = $like->getArticle()->getId();
+        }
+                    
+               return new JsonResponse($output);
+
+       
+   }
      /**
      * @param Request $request
      * @return JsonResponse

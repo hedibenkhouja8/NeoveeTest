@@ -26,14 +26,14 @@ class ArticleLike
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="Article",inversedBy="article_like")
+     * @ORM\ManyToOne(targetEntity="Article",inversedBy="likes")
      * @JoinColumn(onDelete="CASCADE")
      */
     private $article;
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="User",inversedBy="article_like")
+     * @ORM\ManyToOne(targetEntity="User",inversedBy="likes")
      * @JoinColumn(onDelete="CASCADE")
      */
     private $user;

@@ -6,14 +6,17 @@ use ArticleBundle\Entity\Article;
 use ArticleBundle\Form\ArticleType;
 use ArticleBundle\Service\Validate;
 use ArticleBundle\Entity\ArticleLike;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use ArticleBundle\Repository\ArticleRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 
 class ArticleController extends Controller
@@ -31,7 +34,7 @@ class ArticleController extends Controller
 
          $articles=$this->getDoctrine()
                         ->getRepository('ArticleBundle:Article')
-                        ->findBy(['author' => $id], array('updatedAt' => 'DESC'));
+                        ->findBy(['user' => $id], array('updatedAt' => 'DESC'));
 
         $formatted = [];
 
@@ -43,7 +46,7 @@ class ArticleController extends Controller
                'updated_at' => $article->getUpdatedAt(),
                
                'user_id'=> $article->getUser()->getId(),
-               'likes' => $article->getLikes(),
+               'likes' =>count( $article->getLikes()),
             ];
         }
         return new JsonResponse($formatted);
@@ -79,6 +82,7 @@ class ArticleController extends Controller
                'updated_at' => $article->getUpdatedAt(),
                'likes' => $size,
             ];
+            
         }
 
         return new JsonResponse($formatted);
@@ -183,50 +187,31 @@ class ArticleController extends Controller
     }
 
    
-     /** 
+   
+    /** 
      * @param Request $request
      * @return JsonResponse
-     * @Route("/articles", name="articles_list")
+     * @Route("/articless", name="articles_listd")
      * @Method({"GET"})
-     *//*
-    public function getAllarticles(Request $request)
+     */ 
+    /*
+    public function getAllarticlesserializer(Request $request)
     {
            $articles = $this->get('doctrine.orm.entity_manager')
-                            ->getRepository('ArticleBundle:Article')
+                            ->getRepository('ArticleBundle:ArticleLike')
                             ->findAll();
-           
+                           
+                            $encoders = [new JsonEncoder()]; // If no need for XmlEncoder
+                            $normalizers = [new ObjectNormalizer()];
+                            $serializer = new Serializer($normalizers, $encoders);
+                            
+                            // Serialize your object in Json
+                            $jsonObject = $serializer->serialize($articles, 'json', [
+                                'groups' => 'show_article']);
+                            
+                            // For instance, return a Response with encoded Json
+                            return new Response($jsonObject, 200, ['Content-Type' => 'application/json']);
 
-        $formatted = [];
-        foreach ($articles as $article) {
-            $likes = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('ArticleBundle:ArticleLike')
-            ->findBy(['article' => $article->getId()]);
-            
-            $size = count($likes);
-            $formatted[] = [
-                'id' => $article->getId(),
-                'titre' => $article->getTitre(),
-                'contenu' => $article->getContenu(),
-                'user_name'=> $article->getUser()->getNom(),
-                'user_id'=> $article->getUser()->getId(),
-                'updated_at' => $article->getUpdatedAt(),
-                'likes' => $size,'likers' => 1,
-                foreach ($likes as $like){
-                   'likers'=>1 
-                }
-             ];
-            foreach ($likes as $like) {
-                $f[] = [
-                    'like_id'=>$like->getId(),
-                    'article'=>$like->getArticle()->getId(),
-                    'user_id' =>$like->getUser()->getId()];
-                    
-            } 
-            
-        }
-
-        return new JsonResponse($f);
-        
     }*/
 }
 

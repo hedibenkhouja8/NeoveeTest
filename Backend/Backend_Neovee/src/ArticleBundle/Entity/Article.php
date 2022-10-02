@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ArticleBundle\Entity\ArticleLike;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -24,13 +25,15 @@ class Article
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @Groups("show_article")
      */
     private $id;
 
     /**
      * @var string
      * @ORM\Column(name="titre", type="string", length=255)
-     
+     * @Groups("show_article")
      */
     private $titre;
 
@@ -43,10 +46,10 @@ class Article
      /**
      * @var User
      * 
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User",inversedBy="articles")
      *  @ORM\JoinColumn(name="user_id",referencedColumnName="id")
      */
-    private $author;
+    private $user;
 
     /**
      * @var \DateTime
@@ -145,28 +148,28 @@ class Article
     }
     
     /**
-     * Set author
+     * Set user
      *
-     * @param User $author
+     * @param User $user
      */
-    public function setUser($author)
+    public function setUser($user)
     {
-        $this->author = $author;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get author
+     * Get user
      *
      * @return User
      */
     public function getUser()
     {
-        return $this->author;
+        return $this->user;
     }
     /**
-     * Get author
+     * Get user
      *
      * @return Collection|ArticleLike
      */
@@ -174,6 +177,16 @@ class Article
     {
         return $this->likes;
     }
+    
+   
+   public function addLike(ArticleLike $like):Collection
+   {
+       if ($this->likes->contains($like)) {
+        $this->likes[]=$like;
+        $like->setArticle($this);
+       }
+       return $this;
+   }
     
      /**
      * Article constructor.

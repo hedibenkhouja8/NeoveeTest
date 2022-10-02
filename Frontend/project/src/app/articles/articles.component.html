@@ -5,7 +5,7 @@
     <p class="lead">Nous vous attendons toujours , Voici ce que vous avez manqué pendant que vous étiez hors ligne, amusez-vous. </p>
     <hr class="my-4">
     <p>
-        Vous vous sentez motivé pour partager des informations avec vos collègues 
+        Vous vous sentez motivé pour partager des informations avec vos collègues  
 
         <button class="btn  btn-success float-end" (click)="open(mymodal)">Publier un article</button>
     <p class="lead">
@@ -44,12 +44,10 @@
     </div><br><br><!-- Button trigger modal -->
    
     
-  
 <ng-template #mymodal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Ecrivez votre article</h4>
-    
-   
+
   </div>
   <div class="modal-body">
     <form #articlesForm="ngForm" (ngSubmit)="AddArticle(articlesForm.value)" enctype="multipart/form-data">
